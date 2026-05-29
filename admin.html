@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleanbuk Admin - Orders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --accent-color: #f43f5e;
+            --card-bg: rgba(255, 255, 255, 0.6);
+            --card-border: rgba(255, 255, 255, 0.8);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+
+        body {
+            background: linear-gradient(-45deg, #a1c4fd, #c2e9fb, #fbc2eb, #a6c1ee);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-primary);
+            padding: 3rem 2rem;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 3rem;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; border-bottom: 2px solid rgba(255,255,255,0.5); padding-bottom: 1.5rem; }
+        .logo { font-size: 2.5rem; font-weight: 800; letter-spacing: 1px; color: #1e293b; text-shadow: 2px 2px 4px rgba(255,255,255,0.8); }
+        .logo span { color: var(--accent-color); }
+        h1 { color: var(--text-primary); font-weight: 800; font-size: 2rem; }
+        
+        .stats { display: flex; gap: 2rem; margin-bottom: 3rem; }
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+            border: 1px solid rgba(255,255,255,1);
+            padding: 2rem;
+            border-radius: 20px;
+            flex: 1;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .stat-card h3 { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-card p { font-size: 3.5rem; font-weight: 800; color: #0ea5e9; line-height: 1; }
+        .stat-card:nth-child(2) p { color: var(--accent-color); }
+
+        .table-wrapper {
+            background: rgba(255,255,255,0.7);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.9);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.02);
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 1.5rem; text-align: left; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        th { background: rgba(255,255,255,0.9); font-weight: 800; color: var(--text-primary); text-transform: uppercase; font-size: 0.95rem; letter-spacing: 1px; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: rgba(255,255,255,0.9); }
+        .empty-msg { text-align: center; padding: 4rem; color: var(--text-secondary); font-style: italic; font-size: 1.2rem; }
+        
+        .status-badge { background: rgba(16, 185, 129, 0.2); color: #059669; padding: 0.5rem 1.2rem; border-radius: 50px; font-size: 0.85rem; font-weight: 800; display: inline-block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Clean<span>Buk</span></div>
+            <h1>Orders Dashboard</h1>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Total Orders</h3>
+                <p id="total-orders">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Revenue</h3>
+                <p id="total-revenue">₹0</p>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Customer Details</th>
+                        <th>Product Ordered</th>
+                        <th>Amount Paid</th>
+                        <th>Address</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-body">
+                    <tr><td colspan="6" class="empty-msg">Loading orders...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        async function fetchOrders() {
+            try {
+                const response = await fetch('/api/admin/orders');
+                const orders = await response.json();
+                
+                const tbody = document.getElementById('orders-body');
+                tbody.innerHTML = '';
+                
+                document.getElementById('total-orders').innerText = orders.length;
+                
+                let revenue = 0;
+                
+                if(orders.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="empty-msg">No orders received yet. Waiting for customers...</td></tr>';
+                    document.getElementById('total-revenue').innerText = '₹0';
+                    return;
+                }
+                
+                // Sort by newest first
+                orders.reverse().forEach(order => {
+                    const priceValue = parseInt(order.price.replace(/[^0-9]/g, ''));
+                    if(!isNaN(priceValue)) revenue += priceValue;
+                    
+                    const tr = document.createElement('tr');
+                    const date = new Date(order.timestamp).toLocaleString();
+                    const customerName = order.name || 'Anonymous';
+                    const customerEmail = order.email ? `<br><small style="color:#f43f5e; font-weight:600;">${order.email}</small>` : '';
+                    const customerPhone = order.phone ? `<br><small style="color:#64748b; font-weight:600;">${order.phone}</small>` : '';
+                    const customerAddress = order.address || 'N/A';
+                    
+                    tr.innerHTML = `
+                        <td style="color: #64748b; font-weight: 600;">${date}</td>
+                        <td><strong style="color: #0ea5e9; font-size: 1.1rem;">${customerName}</strong>${customerEmail}${customerPhone}</td>
+                        <td style="font-weight: 800; color: #1e293b;">${order.product}</td>
+                        <td style="font-weight: 800; color: #f43f5e;">${order.price}</td>
+                        <td style="font-size: 0.95rem; color: #475569; max-width: 250px;">${customerAddress}</td>
+                        <td><span class="status-badge">Completed</span></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+                
+                document.getElementById('total-revenue').innerText = '₹' + revenue.toLocaleString();
+            } catch (err) {
+                console.error("Failed to load orders", err);
+                const tbody = document.getElementById('orders-body');
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-msg" style="color: #ef4444;">Error loading orders. Is the server running?</td></tr>';
+            }
+        }
+        
+        fetchOrders();
+        // Refresh every 3 seconds to feel real-time
+        setInterval(fetchOrders, 3000);
+    </script>
+</body>
+</html>

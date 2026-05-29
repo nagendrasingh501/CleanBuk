@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleanbuk - Premium Cleaning Solutions</title>
+    <meta name="description" content="Cleanbuk offers premium liquid detergent, glass cleaner, and dish wash for all your home cleaning needs. Order now!">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 3D WebGL Vanta Background -->
+    <div id="vanta-bg" style="position: fixed; z-index: -1; width: 100vw; height: 100vh; top: 0; left: 0;"></div>
+
+    <nav>
+        <div class="logo">Clean<span>Buk</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+    </nav>
+
+    <header id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">Discover the Future of <span>Cleaning</span></h1>
+            <p class="hero-subtitle">Premium quality detergents and cleaners for a spotless, shining home. Experience the ultimate clean with Cleanbuk.</p>
+            <a href="#products" class="cta-button">Explore Products</a>
+        </div>
+    </header>
+
+    <section id="products">
+        <h2 class="section-title">Explore Our Masterpieces</h2>
+        <div class="products-grid">
+            
+            <!-- Product 1 -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <span class="category">Laundry</span>
+                        <h3>Liquid Detergent</h3>
+                        <div class="card-image-front">
+                            <img src="assets/liquid-detergent.jpg" alt="Detergent" class="real-product-img">
+                        </div>
+                        <p class="hover-hint">Tap or Hover for Details ⟳</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Deep Details</h3>
+                        <div class="product-deep-details">
+                            <p>An advanced stain removal formula crafted to deliver a premium clean.</p>
+                            <ul>
+                                <li><strong>Power:</strong> Shine Boosters.</li>
+                                <li><strong>Care:</strong> Fabric softness.</li>
+                                <li><strong>Usage:</strong> Front & Top Load.</li>
+                                <li><strong>Volume:</strong> 2 Liters</li>
+                            </ul>
+                        </div>
+                        <div class="price-action">
+                            <span class="price">₹450</span>
+                            <button class="order-btn" data-product="Liquid Detergent" data-price="₹450">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <span class="category">Surface</span>
+                        <h3>Glass Cleaner</h3>
+                        <div class="card-image-front">
+                            <img src="assets/glass-cleaner.jpg" alt="Glass Cleaner" class="real-product-img">
+                        </div>
+                        <p class="hover-hint">Tap or Hover for Details ⟳</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Deep Details</h3>
+                        <div class="product-deep-details">
+                            <p>Experience sparkling, streak-free clarity on all glass surfaces.</p>
+                            <ul>
+                                <li><strong>Formula:</strong> Ammonia-free.</li>
+                                <li><strong>Protection:</strong> Germ protection.</li>
+                                <li><strong>Safety:</strong> Safe for tinted windows.</li>
+                                <li><strong>Volume:</strong> 500ml Spray</li>
+                            </ul>
+                        </div>
+                        <div class="price-action">
+                            <span class="price">₹150</span>
+                            <button class="order-btn" data-product="Glass Cleaner" data-price="₹150">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <span class="category">Kitchen</span>
+                        <h3>Dish Wash</h3>
+                        <div class="card-image-front">
+                            <img src="assets/dish-wash.jpg" alt="Dish Wash" class="real-product-img">
+                        </div>
+                        <p class="hover-hint">Tap or Hover for Details ⟳</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Deep Details</h3>
+                        <div class="product-deep-details">
+                            <p>Highly concentrated dishwashing liquid cuts through tough grease.</p>
+                            <ul>
+                                <li><strong>Performance:</strong> Powerful on grease.</li>
+                                <li><strong>Scent:</strong> Lemon Fresh Scent.</li>
+                                <li><strong>Skin Care:</strong> Gentle on hands.</li>
+                                <li><strong>Volume:</strong> 500ml Bottle</li>
+                            </ul>
+                        </div>
+                        <div class="price-action">
+                            <span class="price">₹85</span>
+                            <button class="order-btn" data-product="Dish Wash" data-price="₹85">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- NEW ABOUT SECTION -->
+    <section id="about">
+        <h2 class="section-title">The CleanBuk Philosophy</h2>
+        <div class="about-content">
+            <div class="about-card">
+                <h3>Our Mission</h3>
+                <p>At CleanBuk, we believe that a clean home is a happy home. We are absolutely dedicated to providing ultra-premium, highly effective cleaning solutions that tackle the toughest dirt and stains, while remaining incredibly gentle on your hands and completely safe for your family. Every single bottle is meticulously crafted with our signature Shine Boosters to guarantee a flawless, sparkling finish every time you clean.</p>
+            </div>
+            <div class="about-card">
+                <h3>Why Choose Us?</h3>
+                <ul>
+                    <li>🌱 <strong>Eco-Friendly:</strong> 100% Environmentally Safe Formulas</li>
+                    <li>🔬 <strong>Technology:</strong> Advanced Stain-Removal Engineering</li>
+                    <li>✨ <strong>Quality:</strong> Signature Streak-Free Shine Boosters</li>
+                    <li>🛡️ <strong>Safety:</strong> Complete Germ & Bacteria Protection</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Clean<span>Buk</span></div>
+            <p>Sparkling clean homes, effortlessly.</p>
+            <p class="copyright">© 2026 Cleanbuk. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Order Modal -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modal-product-title">Checkout</h2>
+            <p id="modal-product-price" style="color: var(--accent-color); font-weight: bold; margin-bottom: 1rem;"></p>
+            <form id="order-form">
+                <input type="text" id="cust-name" placeholder="Full Name" required>
+                <input type="email" id="cust-email" placeholder="Email Address (e.g. @gmail.com)" required>
+                <input type="tel" id="cust-phone" placeholder="Phone Number" required>
+                <textarea id="cust-address" placeholder="Delivery Address" rows="3" required></textarea>
+                <button type="submit" class="submit-order-btn">Confirm Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
